@@ -2,9 +2,13 @@
 -- Write SQL statements in this file to create the brewery database and 
 -- populate the database with the given SQL files
 
-drop database brewery;
-create database brewery;
-use brewery;
+-- local development
+-- drop database brewery;
+-- create database brewery;
+-- use brewery;
+
+-- railway
+use railway;
 source C:/Users/denni/tfip/paf/assessment_template/database/beers.sql
 source C:/Users/denni/tfip/paf/assessment_template/database/breweries.sql
 source C:/Users/denni/tfip/paf/assessment_template/database/categories.sql

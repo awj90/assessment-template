@@ -20,3 +20,7 @@ Renders landing page with table of beer styles and the count of beers belonging 
 ## POST /brewery<breweryId>/order
 
 - On success, inserts an order document into MongoDB orders collection and renders an order confirmation view with orderId
+
+## MISC
+
+Set/export environment variables before running

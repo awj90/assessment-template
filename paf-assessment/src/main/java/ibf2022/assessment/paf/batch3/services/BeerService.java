@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ibf2022.assessment.paf.batch3.exceptions.DatabaseException;
 import ibf2022.assessment.paf.batch3.models.Beer;
 import ibf2022.assessment.paf.batch3.models.Brewery;
 import ibf2022.assessment.paf.batch3.models.Order;
@@ -23,25 +24,41 @@ public class BeerService {
 	@Autowired
 	OrderRepository orderRepository;
 
-	public List<Style> getStyles() {
-		return beerRepository.getStyles();
+	public List<Style> getStyles() throws DatabaseException {
+		try {
+			return beerRepository.getStyles();
+		} catch (DatabaseException ex) {
+			throw new DatabaseException(ex.getMessage());
+		}
 	}
 
-	public List<Beer> getBreweriesByBeer(int styleId) {
-		return beerRepository.getBreweriesByBeer(styleId);
+	public List<Beer> getBreweriesByBeer(int styleId) throws DatabaseException {
+		try {
+			return beerRepository.getBreweriesByBeer(styleId);
+		} catch (DatabaseException ex) {
+			throw new DatabaseException(ex.getMessage());
+		}
 	}
 
-	public Optional<Brewery> getBeersFromBrewery(int breweryId) {
-		return beerRepository.getBeersFromBrewery(breweryId);
+	public Optional<Brewery> getBeersFromBrewery(int breweryId) throws DatabaseException {
+		try {
+			return beerRepository.getBeersFromBrewery(breweryId);
+		} catch (DatabaseException ex) {
+			throw new DatabaseException(ex.getMessage());
+		}
 	}
 
 	// DO NOT CHANGE THE METHOD'S NAME OR THE RETURN TYPE OF THIS METHOD
-	public String placeOrder(Order order) {
+	public String placeOrder(Order order) throws DatabaseException {
 		// TODO: Task 5 
-		String orderId = UUID.randomUUID().toString().substring(0, 8);
-		order.setOrderId(orderId);
-		orderRepository.insertOrder(order);
-		return orderId;
+		try {
+			String orderId = UUID.randomUUID().toString().substring(0, 8);
+			order.setOrderId(orderId);
+			orderRepository.insertOrder(order);
+			return orderId;
+		} catch (DatabaseException ex) {
+			throw new DatabaseException(ex.getMessage());
+		}
 	}
 
 }
