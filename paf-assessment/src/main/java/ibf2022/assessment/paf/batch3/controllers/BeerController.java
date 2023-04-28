@@ -64,6 +64,7 @@ public class BeerController {
 		return mav;
 	}
 
+	// String version
 	// @GetMapping(path="/beer/brewery/{breweryId}", produces="text/html")
 	// public String renderViewTwo(@PathVariable int breweryId, @RequestParam String breweryName, Model model) {
 	// 	Optional<Brewery> opt = beerService.getBeersFromBrewery(breweryId);
