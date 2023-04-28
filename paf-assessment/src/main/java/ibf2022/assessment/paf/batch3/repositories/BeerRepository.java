@@ -40,7 +40,7 @@ public class BeerRepository {
 
 		List<Beer> beers = new LinkedList<>();
 
-		String query = "select beers.id, beers.name as beer_name, beers.descript, beers.brewery_id, breweries.name as brewery_name from beers join breweries on beers.brewery_id = breweries.id where beers.style_id = ? order by beers.name asc";
+		String query = "select beers.id as beer_id, beers.name as beer_name, beers.descript as beer_descript, beers.brewery_id as brewery_id, breweries.name as brewery_name from beers join breweries on beers.brewery_id = breweries.id where beers.style_id = ? order by beers.name asc";
 		SqlRowSet rs = jdbcTemplate.queryForRowSet(query, styleId);
 		
 		while (rs.next()) {
@@ -50,9 +50,24 @@ public class BeerRepository {
 	}
 
 	// DO NOT CHANGE THE METHOD'S NAME OR THE RETURN TYPE OF THIS METHOD
-	public Optional<Brewery> getBeersFromBrewery(/* You can add any number of parameters here */) {
+	public Optional<Brewery> getBeersFromBrewery(int breweryId) {
 		// TODO: Task 4
 
-		return Optional.empty();
+		String query = "select breweries.id as brewery_id, breweries.name as brewery_name, breweries.address1, breweries.address2, breweries.city, breweries.phone, breweries.website, breweries.descript as brewery_descript, beers.name as beer_name, beers.descript as beer_descript, beers.id as beer_id from breweries join beers on breweries.id = beers.brewery_id where breweries.id = ? order by beers.name asc";
+		SqlRowSet rs = jdbcTemplate.queryForRowSet(query, breweryId);
+
+		Brewery brewery = null;
+
+		if (rs.next()) {
+            brewery = Brewery.create(rs);
+        } else {
+			return Optional.empty();
+		}
+
+		while (rs.next()) {
+			brewery.addBeer(Beer.create(rs));
+		}
+
+		return Optional.of(brewery);
 	}
 }

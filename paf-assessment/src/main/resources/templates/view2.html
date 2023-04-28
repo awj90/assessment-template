@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>View 2</title>
+  </head>
+  <body>
+    <h1 data-th-text="${brewery.name}"></h1>
+    <a href="/">Back</a>
+    <table data-th-object="${brewery}">
+      <tr>
+        <td>Description:</td>
+        <td data-th-text="*{description}"></td>
+      </tr>
+      <tr>
+        <td>Address:</td>
+        <td>
+          <table>
+            <tr>
+              <td data-th-text="*{address1}"></td>
+            </tr>
+            <tr>
+              <td data-th-text="*{city}"></td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td>Phone:</td>
+        <td data-th-text="*{phone}"></td>
+      </tr>
+      <tr>
+        <td>Website:</td>
+        <td><a data-th-href="*{website}" target="_blank">Go</a></td>
+      </tr>
+    </table>
+    <h2>Beers</h2>
+    <div data-th-if="${#lists.isEmpty(brewery.beers)}">
+      <p>Sorry, there are no beers available for sale currently</p>
+    </div>
+    <div data-th-unless="${#lists.isEmpty(brewery.beers)}">
+      <form
+        method="POST"
+        data-th-action="@{/brewery/{breweryId}/order(breweryId=${brewery.breweryId})}"
+      >
+        <button type="submit">Place Order</button>
+        <table border="solid">
+          <tr>
+            <td><b>Name</b></td>
+            <td><b>Description</b></td>
+            <td><b>Quantity</b></td>
+          </tr>
+          <tr data-th-each="beer : ${brewery.beers}">
+            <td data-th-text="${beer.beerName}"></td>
+            <td data-th-text="${beer.beerDescription}"></td>
+            <td>
+              <input
+                type="number"
+                min="0"
+                step="1"
+                data-th-name="${beer.beerId}"
+              />
+            </td>
+          </tr>
+        </table>
+      </form>
+    </div>
+  </body>
+</html>

@@ -52,9 +52,9 @@ public class Beer {
 
 	public static Beer create(SqlRowSet rs) {
 		Beer beer = new Beer();
-		beer.setBeerId(rs.getInt("id"));
+		beer.setBeerId(rs.getInt("beer_id"));
 		beer.setBeerName(rs.getString("beer_name"));
-		beer.setBeerDescription(rs.getString("descript"));
+		beer.setBeerDescription(rs.getString("beer_descript"));
 		beer.setBreweryId(rs.getInt("brewery_id"));
 		beer.setBreweryName(rs.getString("brewery_name"));
 		return beer;
