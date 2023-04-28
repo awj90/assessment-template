@@ -35,10 +35,18 @@ public class BeerRepository {
 	}
 		
 	// DO NOT CHANGE THE METHOD'S NAME OR THE RETURN TYPE OF THIS METHOD
-	public List<Beer> getBreweriesByBeer(/* You can add any number parameters here */) {
+	public List<Beer> getBreweriesByBeer(int styleId) {
 		// TODO: Task 3
 
-		return null;
+		List<Beer> beers = new LinkedList<>();
+
+		String query = "select beers.id, beers.name as beer_name, beers.descript, beers.brewery_id, breweries.name as brewery_name from beers join breweries on beers.brewery_id = breweries.id where beers.style_id = ? order by beers.name asc";
+		SqlRowSet rs = jdbcTemplate.queryForRowSet(query, styleId);
+		
+		while (rs.next()) {
+            beers.add(Beer.create(rs));
+        }
+        return beers;
 	}
 
 	// DO NOT CHANGE THE METHOD'S NAME OR THE RETURN TYPE OF THIS METHOD
